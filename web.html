@@ -3,6 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Similar Face Finder</title>
+    <style>
+        #result {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        #result img {
+            max-width: 45%;
+            max-height: 300px;
+        }
+    </style>
 </head>
 <body>
     <h1>Upload a Photo</h1>
@@ -12,9 +23,11 @@
     </form>
     <div id="result"></div>
     <script>
+        const serverUrl = '/upload'; // Fetch 통신 주소 설정 변수
+
         function uploadFile() {
             var formData = new FormData(document.getElementById('uploadForm'));
-            fetch('/upload', {
+            fetch(serverUrl, {
                 method: 'POST',
                 body: formData
             }).then(response => response.json())
@@ -23,9 +36,16 @@
                       document.getElementById('result').innerText = data.error;
                   } else {
                       document.getElementById('result').innerHTML = `
-                          <p>Tag: ${data.tag}</p>
-                          <p>Similarity: ${data.similarity.toFixed(4)}</p>
-                          <img src="${data.image}" alt="Similar Image">
+                          <div>
+                              <h3>Uploaded Image</h3>
+                              <img src="${data.uploaded_image}" alt="Uploaded Image">
+                          </div>
+                          <div>
+                              <h3>Similar Image</h3>
+                              <img src="${data.similar_image}" alt="Similar Image">
+                              <p>Tag: ${data.tag}</p>
+                              <p>Similarity: ${data.similarity.toFixed(4)}</p>
+                          </div>
                       `;
                   }
               })
