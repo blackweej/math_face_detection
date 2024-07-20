@@ -4,9 +4,6 @@ import numpy as np
 import os
 import sys
 import pickle
-
-# dlib 경로 추가
-sys.path.append('C:\Users\82105\Desktop\face_detection')
 import dlib
 
 from facenet_pytorch import InceptionResnetV1
